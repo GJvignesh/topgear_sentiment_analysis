@@ -7,6 +7,7 @@ import torch
 # from torch.utils.data import Dataset, DataLoader
 # from transformers import DistilBertModel, DistilBertTokenizer
 from torch import cuda
+from transformers import DistilBertTokenizer
 from Triage import Triage
 import model
 import prepare_data
@@ -24,11 +25,20 @@ print("*"*120)
 # Prepare the data
 df_new_reduced, sentiment_map, sentiment_demap = prepare_data.data_process(dataset_path=df_path)
 
+# Initiate the tokenizer
+distill_tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-cased')
+
 # Creating instance of Preprocess
-Preprocess = prepare_data.Preprocess()
+# This Preprocess internally Triage class
+Preprocess = prepare_data.Preprocess(dataframe=df_new_reduced,
+                                     tokenizer=distill_tokenizer,
+                                     max_len=config.MAX_LEN,
+                                     train_batch_size=config.TRAIN_BATCH_SIZE,
+                                     valid_batch_size=config.VALID_BATCH_SIZE)
+
 
 # Accessing the process_data_for_model method of Preprocess class
-training_loader, testing_loader = Preprocess.process_data_for_model(df_new_reduced)
+training_loader, testing_loader = Preprocess.process_data_for_model()
 
 
 model = model.DistillBERTClass()

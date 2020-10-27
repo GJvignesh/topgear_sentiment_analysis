@@ -1,6 +1,5 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from transformers import DistilBertTokenizer
 from torch.utils.data import Dataset, DataLoader
 import Triage
 import config
@@ -121,19 +120,22 @@ def data_process(dataset_path):
 
 class Preprocess(Triage.Triage):
 
-    def process_data_for_model(df_new_reduced):
+    def __init__(self, dataframe, tokenizer, max_len, train_batch_size, valid_batch_size):
+        self.len = len(dataframe)
+        self.data = dataframe
+        self.tokenizer = tokenizer
+        self.max_len = max_len
+        self.train_batch_size = train_batch_size
+        self.valid_batch_size = valid_batch_size
 
-        # Defining some key variables that will be used later on in the training
-        MAX_LEN = config.MAX_LEN
-        TRAIN_BATCH_SIZE = config.TRAIN_BATCH_SIZE
-        VALID_BATCH_SIZE = config.VALID_BATCH_SIZE
+    def process_data_for_model(self):
 
         # Split the data
         # Train-test split
         print("Splitting the data")
 
         # Taking sentence and sentiment alone
-        train_dataset, test_dataset = train_test_split(df_new_reduced[["sentence", "sentiment"]], train_size=0.7,
+        train_dataset, test_dataset = train_test_split(self.dataframe[["sentence", "sentiment"]], train_size=0.7,
                                                        random_state=1)
 
         print("train_dataset.shape: {}".format(train_dataset.shape))
@@ -147,19 +149,16 @@ class Preprocess(Triage.Triage):
         train_dataset.reset_index(inplace=True)
         test_dataset.reset_index(inplace=True)
 
-        # Initiate the tokenizer
-        tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-cased')
-
         # Here we are calling Triage class which inherits the Dataset class
-        training_set = Triage(train_dataset, tokenizer, MAX_LEN)
-        testing_set = Triage(test_dataset, tokenizer, MAX_LEN)
+        training_set = Triage(train_dataset, self.tokenizer, self.MAX_LEN)
+        testing_set = Triage(test_dataset, self.tokenizer, self.MAX_LEN)
 
-        train_params = {'batch_size': TRAIN_BATCH_SIZE,
+        train_params = {'batch_size': self.train_batch_size,
                         'shuffle': True,
                         'num_workers': 0
                         }
 
-        test_params = {'batch_size': VALID_BATCH_SIZE,
+        test_params = {'batch_size': self.valid_batch_size,
                        'shuffle': True,
                        'num_workers': 0
                        }
