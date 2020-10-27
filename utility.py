@@ -117,7 +117,8 @@ def get_weight(df):
     """This will give weights to encounter imbalanced class problem"""
 
     # Getting number of data points for each class
-    weight_count = df["ENCODE_CAT"].value_counts(sort=False)
+    weight_count = df["sentiment"].value_counts(sort=False)
+    print(weight_count)
 
     # Weight of class c is the size of largest class divided by the size of class c.
     weight = weight_count.values.max() / weight_count.values

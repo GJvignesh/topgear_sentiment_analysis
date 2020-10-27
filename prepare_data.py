@@ -41,8 +41,8 @@ class Preprocess(triage.Triage):
         test_dataset.reset_index(inplace=True)
 
         # Here we are calling Triage class which inherits the Dataset class
-        training_set = Triage.Triage(train_dataset, self.tokenizer, self.max_len)
-        testing_set = Triage.Triage(test_dataset, self.tokenizer, self.max_len)
+        training_set = triage.Triage(train_dataset, self.tokenizer, self.max_len)
+        testing_set = triage.Triage(test_dataset, self.tokenizer, self.max_len)
 
         train_params = {'batch_size': self.train_batch_size,
                         'shuffle': True,
