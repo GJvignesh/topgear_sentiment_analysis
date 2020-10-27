@@ -20,7 +20,7 @@ df_path = r"/content/drive/My Drive/AGJCSV/combained_validation_processed.csv"
 
 device = 'cuda' if cuda.is_available() else 'cpu'
 print("Available Device {}".format(device))
-print("*"*120)
+print("-"*60)
 
 # Prepare the data
 df_new_reduced, sentiment_map, sentiment_demap = prepare_data.data_process(dataset_path=df_path)
