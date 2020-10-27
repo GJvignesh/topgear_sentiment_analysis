@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from torch.utils.data import Dataset, DataLoader
-import Triage
+import triage
 import utility
 
 
@@ -10,7 +10,7 @@ from google.colab import drive
 drive.mount("/content/drive")
 
 
-class Preprocess(Triage.Triage):
+class Preprocess(triage.Triage):
 
     def __init__(self, dataframe, tokenizer, max_len, train_batch_size, valid_batch_size):
         self.len = len(dataframe)
