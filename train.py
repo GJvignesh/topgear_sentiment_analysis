@@ -18,6 +18,7 @@ import config
 model_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_30_1epoch/"
 df_path = r"/content/drive/My Drive/AGJCSV/combained_validation_processed.csv"
 
+print("-"*60)
 device = 'cuda' if cuda.is_available() else 'cpu'
 print("Available Device {}".format(device))
 print("-"*60)
@@ -75,6 +76,9 @@ def train(epoch):
         ids = data['ids'].to(device, dtype=torch.long)
         mask = data['mask'].to(device, dtype=torch.long)
         targets = data['targets'].to(device, dtype=torch.long)
+
+        print("len(targets): ",format(len(targets)))
+        print("len(ids): ",format(len(targets)))
 
         # print("*"*120)
         # print("ids: {}".format(ids))

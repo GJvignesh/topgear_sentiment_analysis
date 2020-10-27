@@ -20,7 +20,7 @@ def data_process(dataset_path):
     print("Dropping null and duplicates")
     df.drop_duplicates(inplace=True)
     df.dropna(inplace=True)
-    print("-"*120)
+    print("-"*60)
 
     # Reduce Target length
 
@@ -79,7 +79,7 @@ def data_process(dataset_path):
                 target_list.append(key)
         return target_list, len(target_list)
 
-    print("-"*120)
+    print("-"*60)
     print("Sentiments below 5000 data points")
     target_list, len_target_list = get_low_target(value=5000, count_map = count_map, frame=df)
     print(len_target_list)
