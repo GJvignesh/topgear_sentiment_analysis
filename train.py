@@ -12,6 +12,7 @@ from Triage import Triage
 import model
 import prepare_data
 import config
+import utility
 
 
 # Setting up the device for GPU usage
@@ -24,10 +25,14 @@ print("Available Device {}".format(device))
 print("-"*60)
 
 # Prepare the data
-df_new_reduced, sentiment_map, sentiment_demap = prepare_data.data_process(dataset_path=df_path)
+df_new_reduced, sentiment_map, sentiment_demap = utility.data_process(dataset_path=df_path)
+
+# df_new_reduced sentiment is already encoded
+class_weight = utility.get_weight(df_new_reduced)
 
 # Initiate the tokenizer
 distill_tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-cased')
+
 
 # Creating instance of Preprocess
 # This Preprocess internally Triage class
@@ -41,29 +46,15 @@ Preprocess = prepare_data.Preprocess(dataframe=df_new_reduced,
 # Accessing the process_data_for_model method of Preprocess class
 training_loader, testing_loader = Preprocess.process_data_for_model()
 
-
 model = model.DistillBERTClass()
 model.to(device)
 
-
 # Creating the loss function and optimizer
-loss_function = torch.nn.CrossEntropyLoss()
+loss_function = torch.nn.CrossEntropyLoss(weight=class_weight.to(device))
 optimizer = torch.optim.Adam(params=model.parameters(), lr=config.LEARNING_RATE)
 
 
 # Training
-# Function to calculate the accuracy of the model
-
-def calcuate_accu(big_idx, targets):
-    n_correct = (big_idx == targets).sum().item()
-    # print("^"*120)
-    # print("Inside Accuracy:")
-    # print("big_idx: {}".format(big_idx))
-    # print("targets: {}".format(targets))
-    # print("(big_idx==targets).sum().item(): {}".format((big_idx==targets).sum().item()))
-    # print("^"*120)
-    return n_correct
-
 
 # Defining the training function on the 80% of the dataset for tuning the distilbert model
 def train(epoch):
@@ -77,9 +68,9 @@ def train(epoch):
         mask = data['mask'].to(device, dtype=torch.long)
         targets = data['targets'].to(device, dtype=torch.long)
 
-        print("len(targets): ",format(len(targets)))
-        print("len(ids): ",format(len(targets)))
-        print("len(ids[0]): ", format(len(ids[0])))
+        # print("len(targets): ".format(len(targets)))
+        # print("len(ids): ".format(len(targets)))
+        # print("len(ids[0]): ".format(len(ids[0])))
 
         # print("*"*120)
         # print("ids: {}".format(ids))
@@ -100,7 +91,7 @@ def train(epoch):
         # print("torch.max(outputs.data, dim=1): {}".format(torch.max(outputs.data, dim=1)))
         big_val, big_idx = torch.max(outputs.data, dim=1)
         # print("big_idx: {}".format(big_idx))
-        n_correct += calcuate_accu(big_idx, targets)
+        n_correct += utility.calculate_accuracy(big_idx, targets)
         # print("+"*120)
 
         nb_tr_steps += 1
