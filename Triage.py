@@ -33,3 +33,4 @@ class Triage(Dataset):
 
     def __len__(self):
         return self.len
+
