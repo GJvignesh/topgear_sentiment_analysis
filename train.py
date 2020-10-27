@@ -8,7 +8,6 @@ import torch
 # from transformers import DistilBertModel, DistilBertTokenizer
 from torch import cuda
 from transformers import DistilBertTokenizer
-from Triage import Triage
 import model
 import prepare_data
 import config
