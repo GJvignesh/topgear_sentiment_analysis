@@ -50,7 +50,8 @@ model = model.DistillBERTClass()
 model.to(device)
 
 # Creating the loss function and optimizer
-loss_function = torch.nn.CrossEntropyLoss(weight=class_weight.to(device, dtype=torch.long))
+loss_function = torch.nn.CrossEntropyLoss(weight=class_weight.to(device))
+print("Class Weight: {}".format(class_weight))
 optimizer = torch.optim.Adam(params=model.parameters(), lr=config.LEARNING_RATE)
 
 
