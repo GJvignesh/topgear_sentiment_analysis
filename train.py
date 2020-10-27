@@ -79,6 +79,7 @@ def train(epoch):
 
         print("len(targets): ",format(len(targets)))
         print("len(ids): ",format(len(targets)))
+        print("len(ids[0]): ", format(len(ids[0])))
 
         # print("*"*120)
         # print("ids: {}".format(ids))
