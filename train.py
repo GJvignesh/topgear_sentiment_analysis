@@ -35,12 +35,13 @@ distill_tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-cased')
 
 # Creating instance of Preprocess
 # This Preprocess internally Triage class
+# This will split data and encode using passing tokenizer
+# Creating instance of the class
 Preprocess = prepare_data.Preprocess(dataframe=df_new_reduced,
                                      tokenizer=distill_tokenizer,
                                      max_len=config.MAX_LEN,
                                      train_batch_size=config.TRAIN_BATCH_SIZE,
                                      valid_batch_size=config.VALID_BATCH_SIZE)
-
 
 # Accessing the process_data_for_model method of Preprocess class
 training_loader, testing_loader = Preprocess.process_data_for_model()
@@ -49,7 +50,7 @@ model = model.DistillBERTClass()
 model.to(device)
 
 # Creating the loss function and optimizer
-loss_function = torch.nn.CrossEntropyLoss(weight=class_weight.to(device))
+loss_function = torch.nn.CrossEntropyLoss(weight=class_weight.to(device, dtype=torch.long))
 optimizer = torch.optim.Adam(params=model.parameters(), lr=config.LEARNING_RATE)
 
 
