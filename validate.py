@@ -83,6 +83,7 @@ def valid(model, testing_loader):
 
     return epoch_accu, y_test_actual, y_test_predicted, y_test_predicted_prob_list
 
+# tst
 
 # Initiate the tokenizer
 distill_tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-cased')
