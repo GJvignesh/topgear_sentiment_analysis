@@ -192,3 +192,29 @@ def save_model(EPOCH, model, optimizer, LOSS, ACCURACY, PATH):
         'Accuracy': ACCURACY
     }, PATH)
     print("Saved the model")
+
+
+def report(y_test, y_pred, sentiment_map):
+    from sklearn.metrics import confusion_matrix
+    from IPython.display import display
+    from sklearn.metrics import accuracy_score, f1_score, classification_report
+    import pandas as pd
+
+    sorted_sentiment_map = list(sorted(sentiment_map.keys()))
+    confusion_matrix_df = pd.DataFrame(confusion_matrix(y_test, y_pred), index=sorted_sentiment_map)
+    confusion_matrix_df.columns = sorted_sentiment_map
+    # display( confusion_matrix_df.style.background_gradient(cmap ='viridis') )
+
+    report = classification_report(y_test, y_pred, output_dict=True, target_names=sorted_sentiment_map)
+    print(report)
+    print("*" * 120)
+    print("Macro F1 score: {}".format(f1_score(y_test, y_pred, average="macro")))
+    print("Micro F1 score: {}".format(f1_score(y_test, y_pred, average="micro")))
+    print("Weighted F1 score: {}".format(f1_score(y_test, y_pred, average="weighted")))
+    print("accuracy_score : {}".format(accuracy_score(y_test, y_pred)))
+    print("*" * 120)
+
+    # Printing the multiclass confusion matrix
+    display(confusion_matrix_df.style.background_gradient(cmap='viridis', axis=1))
+
+    return confusion_matrix_df.style.background_gradient(cmap='viridis', axis=1), report
