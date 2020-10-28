@@ -88,11 +88,12 @@ test_params = {'batch_size': config.VALID_BATCH_SIZE,
                'shuffle': True,
                'num_workers': 0}
 
-validation_frame = pd.read_csv(config.df_valid_path).sample(frac=0.01)  # for testing
 
-validation_frame_reduced, sentiment_map, sentiment_demap = utility.data_process(validation_frame)
+validation_frame_reduced, sentiment_map, sentiment_demap = utility.data_process(config.df_valid_path)
 validation_frame_reduced.columns = ["TITLE", "ENCODE_CAT"]
 validation_frame_reduced.reset_index(inplace=True)
+
+validation_frame_reduced = validation_frame_reduced.sample(frac=0.01)
 
 testing_set = triage.Triage(validation_frame_reduced, distill_tokenizer, config.MAX_LEN)
 testing_loader = DataLoader(testing_set, **test_params)
