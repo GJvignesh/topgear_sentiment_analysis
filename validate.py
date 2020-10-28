@@ -94,7 +94,7 @@ validation_frame_reduced.columns = ["TITLE", "ENCODE_CAT"]
 # validation_frame_reduced.reset_index(inplace=True)
 print(validation_frame_reduced.shape)
 print(validation_frame_reduced.head())
-print(validation_frame_reduced[430])
+print(validation_frame_reduced[4])
 validation_frame_reduced = validation_frame_reduced.sample(frac=0.01)
 
 testing_set = triage.Triage(validation_frame_reduced, distill_tokenizer, config.MAX_LEN)
