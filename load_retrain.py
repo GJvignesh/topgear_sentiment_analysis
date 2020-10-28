@@ -74,6 +74,10 @@ if type(checkpoint['Accuracy']) == int:
 if type(checkpoint['Accuracy']) == list:
     accuracy_list.extend(checkpoint['Accuracy'])
 
+print("Saved epoch_list: {}".format(epoch_list))
+print("Saved loss_list: {}".format(loss_list))
+print("Saved accuracy_list: {}".format(accuracy_list))
+
 
 # Defining the training function on the 80% of the dataset for tuning the distilbert model
 def retrain(epoch):
