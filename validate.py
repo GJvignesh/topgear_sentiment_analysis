@@ -38,7 +38,7 @@ def valid(model, testing_loader):
     nb_tr_steps = 0
     nb_tr_examples = 0
     y_test_predicted = []
-    y_test_predicted_prob = []
+    y_test_predicted_prob_list = []
     y_test_actual = []
     softmax = torch.nn.Softmax(dim=1)
     with torch.no_grad():
@@ -54,7 +54,7 @@ def valid(model, testing_loader):
             big_val, big_idx = torch.max(outputs.data, dim=1)
             y_test_predicted_prob = softmax(outputs.data)
             print("y_test_predicted_prob: {}".format(y_test_predicted_prob))
-            y_test_predicted_prob.append(y_test_predicted_prob.tolist())
+            y_test_predicted_prob_list.append(y_test_predicted_prob.tolist())
 
             n_correct += utility.calculate_accuracy(big_idx, targets)
             print("y_test_predicted: {}".format(big_idx))
@@ -81,7 +81,7 @@ def valid(model, testing_loader):
     print(f"Validation Loss Epoch: {epoch_loss}")
     print(f"Validation Accuracy Epoch: {epoch_accu}")
 
-    return epoch_accu, y_test_actual, y_test_predicted, y_test_predicted_prob
+    return epoch_accu, y_test_actual, y_test_predicted, y_test_predicted_prob_list
 
 
 # Initiate the tokenizer
@@ -104,7 +104,7 @@ testing_loader = DataLoader(testing_set, **test_params)
 print('This is the validation section to print the accuracy and see how it performs')
 print('Here we are leveraging on the dataloader crearted for the validation dataset, the approach is using more of pytorch')
 
-acc, y_test_actual, y_test_predicted, y_test_predicted_prob = valid(model, testing_loader)
+acc, y_test_actual, y_test_predicted, y_test_predicted_prob_list = valid(model, testing_loader)
 
 print("Accuracy on test data = %0.2f%%" % acc)
 
