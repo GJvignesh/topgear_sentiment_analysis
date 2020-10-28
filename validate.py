@@ -92,6 +92,9 @@ validation_frame_reduced, sentiment_map, sentiment_demap = utility.data_process(
 validation_frame_reduced = validation_frame_reduced[["sentence","sentiment"]]
 validation_frame_reduced.columns = ["TITLE", "ENCODE_CAT"]
 validation_frame_reduced.reset_index(inplace=True)
+print(validation_frame_reduced.shape)
+print(validation_frame_reduced.head())
+print(validation_frame_reduced[440])
 validation_frame_reduced = validation_frame_reduced.sample(frac=0.01)
 
 testing_set = triage.Triage(validation_frame_reduced, distill_tokenizer, config.MAX_LEN)
