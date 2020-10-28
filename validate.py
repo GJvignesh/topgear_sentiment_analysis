@@ -17,10 +17,11 @@ print("Available Device: {}".format(device))
 print("-"*60)
 
 model = model.DistillBERTClass()  # Creating the model shape
+model.to(device)
 checkpoint = torch.load(config.checkpoint_path)  # Loading the model from check point
-model_loaded = model.load_state_dict(checkpoint['model_state_dict'])
-model_loaded.eval()
-model_loaded.to(device)  # Loading model to GPU
+model.load_state_dict(checkpoint['model_state_dict'])
+model.eval()
+model.to(device)  # Loading model to GPU
 
 # Validation
 # Creating the loss function and optimizer
@@ -95,7 +96,7 @@ testing_loader = DataLoader(testing_set, **test_params)
 print('This is the validation section to print the accuracy and see how it performs')
 print('Here we are leveraging on the dataloader crearted for the validation dataset, the approach is using more of pytorch')
 
-acc, y_test_actual, y_test_predicted=valid(model_loaded, testing_loader)
+acc, y_test_actual, y_test_predicted=valid(model, testing_loader)
 
 print("Accuracy on test data = %0.2f%%" % acc)
 
