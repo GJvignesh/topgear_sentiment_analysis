@@ -40,6 +40,7 @@ Preprocess = prepare_data.Preprocess(dataframe=df_new_reduced,
 training_loader, testing_loader = Preprocess.process_data_for_model()
 
 model = model.DistillBERTClass()
+model.to(device)
 
 # Creating the loss function and optimizer
 loss_function = torch.nn.CrossEntropyLoss(weight=class_weight.to(device))
