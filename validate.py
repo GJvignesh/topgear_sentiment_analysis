@@ -53,7 +53,7 @@ def valid(model, testing_loader):
             tr_loss += loss.item()
             big_val, big_idx = torch.max(outputs.data, dim=1)
             y_test_predicted_prob = softmax(outputs.data)
-            print("y_test_predicted_prob: {}".format(y_test_predicted_prob))
+            # print("y_test_predicted_prob: {}".format(y_test_predicted_prob))
             y_test_predicted_prob_list.append(y_test_predicted_prob.tolist())
 
             n_correct += utility.calculate_accuracy(big_idx, targets)
