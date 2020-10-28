@@ -1,23 +1,15 @@
-# Importing the libraries needed
-from time import gmtime, strftime
-from tqdm import tqdm
 import pandas as pd
+from time import gmtime, strftime
 import torch
-# import transformers
-# from torch.utils.data import Dataset, DataLoader
-# from transformers import DistilBertModel, DistilBertTokenizer
 from torch import cuda
 from transformers import DistilBertTokenizer
 import model
+from tqdm import tqdm
 import prepare_data
 import config
 import utility
 
-
-# Setting up the device for GPU usage
-model_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_30_1epoch/"
-
-print("-"*60)
+print("-"*80)
 device = 'cuda' if cuda.is_available() else 'cpu'
 print("Available Device: {}".format(device))
 print("-"*60)
@@ -48,18 +40,26 @@ Preprocess = prepare_data.Preprocess(dataframe=df_new_reduced,
 training_loader, testing_loader = Preprocess.process_data_for_model()
 
 model = model.DistillBERTClass()
-model.to(device)
 
 # Creating the loss function and optimizer
 loss_function = torch.nn.CrossEntropyLoss(weight=class_weight.to(device))
 print("Class Weight: {}".format(class_weight))
 optimizer = torch.optim.Adam(params=model.parameters(), lr=config.LEARNING_RATE)
 
+# Loading from check point
+checkpoint = torch.load(config.checkpoint_path)
+model.load_state_dict(checkpoint['model_state_dict'])
+optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+epoch_list = []
+epoch_list.extend(checkpoint['epoch'])
+loss_list = []
+loss_list.extend(checkpoint['loss'])
+accuracy_list = []
+accuracy_list.extend(checkpoint['Accuracy'])
 
-# Training
 
 # Defining the training function on the 80% of the dataset for tuning the distilbert model
-def train(epoch):
+def retrain(epoch):
     tr_loss = 0
     n_correct = 0
     nb_tr_steps = 0
@@ -115,10 +115,13 @@ def train(epoch):
     epoch_loss = tr_loss / nb_tr_steps
     epoch_accu = (n_correct * 100) / nb_tr_examples
 
+    epoch_list.append(epoch)
+    loss_list.append(epoch_loss)
+    accuracy_list.append(epoch_accu)
     # Creating check point
-    utility.save_model(EPOCH=epoch, model=model, optimizer=optimizer,
-               LOSS=epoch_loss, ACCURACY=epoch_accu,
-               PATH=config.checkpoint_path)
+    utility.save_model(EPOCH=epoch_list, model=model, optimizer=optimizer,
+                       LOSS=loss_list, ACCURACY=accuracy_list,
+                       PATH=config.checkpoint_path)
 
     print(f"Training Loss Epoch: {epoch_loss}")
     print(f"Training Accuracy Epoch: {epoch_accu}")
@@ -127,4 +130,4 @@ def train(epoch):
 
 
 for epoch in range(config.EPOCHS):
-    train(epoch)
+    retrain(epoch)

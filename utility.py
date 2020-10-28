@@ -2,6 +2,7 @@ import numpy as np
 import torch
 import pandas as pd
 from tqdm import tqdm
+import config
 
 
 def data_process(dataset_path):
@@ -47,15 +48,43 @@ def data_process(dataset_path):
     sentiment_reduce_map["worried"] = "worry"
     sentiment_reduce_map["not_relevant"] = "not-relevant"
 
-    print("Sentiment mapping")
     print("Total sentiment before mapping")
-    print(df["sentiment"].nunique())
-
-    # Merging the sentiment
+    print("Total number of sentiments: ".format(df["sentiment"].nunique()))
+    # Merging the sentiment set 1
     df['sentiment'] = df['sentiment'].map(sentiment_reduce_map)
+    print("After sentiment mapping Set_1")
+    print("Total number of sentiments: ".format(df["sentiment"].nunique()))
 
-    print("Total sentiment after mapping")
-    print(df["sentiment"].nunique())
+    # New mapping
+    sentiment_reduce_map["awe"] = "carving"
+    sentiment_reduce_map["entertaining"] = "ridicule"
+    sentiment_reduce_map["criticize"] = "ridicule"
+    sentiment_reduce_map["sarcasm"] = "ridicule"
+    sentiment_reduce_map["shame"] = "disgust"
+    sentiment_reduce_map["enthusiasm"] = "surprise"
+    sentiment_reduce_map["relief"] = "happy"
+    sentiment_reduce_map["excitement"] = "happy"
+    sentiment_reduce_map["love"] = "happy"
+    sentiment_reduce_map["horror"] = "anxious"
+    sentiment_reduce_map["pain"] = "anxious"
+    sentiment_reduce_map["arousal"] = "anxious"
+    sentiment_reduce_map["teasing"] = "anxious"
+    sentiment_reduce_map["mad"] = "grief"
+    sentiment_reduce_map["vulgar"] = "grief"
+    sentiment_reduce_map["negative"] = "grief"
+    sentiment_reduce_map["remorse"] = "grief"
+    sentiment_reduce_map["sad"] = "grief"
+    sentiment_reduce_map["not_funny"] = "worry"
+    sentiment_reduce_map["valence"] = "anticipation"
+    sentiment_reduce_map["trust"] = "anticipation"
+
+    # Merging the sentiment set 2
+    df['sentiment'] = df['sentiment'].map(sentiment_reduce_map)
+    print("After sentiment mapping Set_2")
+    print("Total number of sentiments: ".format(df["sentiment"].nunique()))
+
+    after_sentiment_merge = df["sentiment"].value_counts().plot(kind="bar", figsize=(25, 10)).get_figure()
+    after_sentiment_merge.savefig(config.generic_path+'after_sentiment_merge.jpeg')
 
     # Setting to category type for encoding
     df["sentiment"] = df["sentiment"].astype("category")
@@ -80,8 +109,9 @@ def data_process(dataset_path):
     print(len_target_list)
 
     # Dropping minimum number of target (as of now dropping 5 targets)
-    target_list = ['not-relevant',
-                   'others', 'nocode', 'none', 'https']
+    target_list = ['not-relevant', 'others', 'nocode', 'none', 'https',
+                   'awkwardness', 'agreement', 'disagreement', 'emotion', 'empty', 'encouragement', 'motivate',
+                   'optimism', 'racist/sexist']
 
     print("-" * 80)
     print("Sentiment to be dropped list, due to poor number of datapoints")
@@ -96,6 +126,9 @@ def data_process(dataset_path):
 
     # df_new_reduced is reduced target data frame
     df_new_reduced = drop_target(target_list, df)
+
+    final_distribution = df_new_reduced["sentiment"].value_counts().plot(kind="bar", figsize=(25, 10)).get_figure()
+    final_distribution.savefig(config.generic_path+'final_distribution.jpeg')
 
     print("-" * 80)
     print("Total Number of reduced sentiment (number of targets)")
@@ -148,3 +181,14 @@ def get_max_len_sentence(df):
             max_len = len(string)
     print(max_len)
     return max_len
+
+
+def save_model(EPOCH, model, optimizer, LOSS, ACCURACY, PATH):
+  torch.save({
+            'epoch': EPOCH,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'loss': LOSS,
+            'Accuracy': ACCURACY
+            }, PATH)
+  print("Saved the model")
