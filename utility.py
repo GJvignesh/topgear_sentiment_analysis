@@ -49,11 +49,11 @@ def data_process(dataset_path):
     sentiment_reduce_map["not_relevant"] = "not-relevant"
 
     print("Total sentiment before mapping")
-    print("Total number of sentiments: ".format(df["sentiment"].nunique()))
+    print("Total number of sentiments: {}".format(df["sentiment"].nunique()))
     # Merging the sentiment set 1
     df['sentiment'] = df['sentiment'].map(sentiment_reduce_map)
     print("After sentiment mapping Set_1")
-    print("Total number of sentiments: ".format(df["sentiment"].nunique()))
+    print("Total number of sentiments: {}".format(df["sentiment"].nunique()))
 
     # New mapping
     sentiment_reduce_map["awe"] = "carving"

@@ -12,7 +12,7 @@ class DistillBERTClass(torch.nn.Module):
         self.l1 = DistilBertModel.from_pretrained("distilbert-base-uncased")
         self.pre_classifier = torch.nn.Linear(768, 768)
         self.dropout = torch.nn.Dropout(0.3)
-        self.classifier = torch.nn.Linear(768, 60)
+        self.classifier = torch.nn.Linear(768, 31)
         # self.softmax = torch.nn.Softmax(dim=1)
 
     def forward(self, input_ids, attention_mask):
