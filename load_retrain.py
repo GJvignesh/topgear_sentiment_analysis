@@ -51,7 +51,7 @@ checkpoint = torch.load(config.checkpoint_path)
 model.load_state_dict(checkpoint['model_state_dict'])
 optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
 
-print(checkpoint.keys())
+# print(checkpoint.keys())
 
 epoch_list = []
 if type(checkpoint['epoch']) == int:
@@ -66,10 +66,10 @@ if type(checkpoint['loss']) == list:
     loss_list.extend(checkpoint['loss'])
 
 accuracy_list = []
-if type(checkpoint['accuracy']) == int:
-    epoch_list.append(checkpoint['accuracy'])
-if type(checkpoint['accuracy']) == list:
-    epoch_list.extend(checkpoint['accuracy'])
+if type(checkpoint['Accuracy']) == int:
+    accuracy_list.append(checkpoint['Accuracy'])
+if type(checkpoint['Accuracy']) == list:
+    accuracy_list.extend(checkpoint['Accuracy'])
 
 
 # Defining the training function on the 80% of the dataset for tuning the distilbert model

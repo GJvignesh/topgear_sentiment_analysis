@@ -189,6 +189,6 @@ def save_model(EPOCH, model, optimizer, LOSS, ACCURACY, PATH):
         'model_state_dict': model.state_dict(),
         'optimizer_state_dict': optimizer.state_dict(),
         'loss': LOSS,
-        'accuracy': ACCURACY
+        'Accuracy': ACCURACY
     }, PATH)
     print("Saved the model")
