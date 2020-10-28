@@ -18,8 +18,6 @@ print("-"*60)
 df_path = config.df_path
 df_new_reduced, sentiment_map, sentiment_demap = utility.data_process(dataset_path=df_path)
 
-# df_new_reduced sentiment is already encoded
-class_weight = utility.get_weight(df_new_reduced)
 
 # Initiate the tokenizer
 distill_tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-cased')
@@ -43,8 +41,7 @@ model = model.DistillBERTClass()
 model.to(device)
 
 # Creating the loss function and optimizer
-loss_function = torch.nn.CrossEntropyLoss(weight=class_weight.to(device))
-print("Class Weight: {}".format(class_weight))
+loss_function = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(params=model.parameters(), lr=config.LEARNING_RATE)
 
 # Loading from check point
