@@ -50,6 +50,8 @@ optimizer = torch.optim.Adam(params=model.parameters(), lr=config.LEARNING_RATE)
 checkpoint = torch.load(config.checkpoint_path)
 model.load_state_dict(checkpoint['model_state_dict'])
 optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+model.to(device)
+
 
 # print(checkpoint.keys())
 
