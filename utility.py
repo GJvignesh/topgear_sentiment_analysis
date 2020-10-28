@@ -81,7 +81,7 @@ def data_process(dataset_path):
     # Merging the sentiment set 2
     df['sentiment'] = df['sentiment'].map(sentiment_reduce_map)
     print("After sentiment mapping Set_2")
-    print("Total number of sentiments: ".format(df["sentiment"].nunique()))
+    print("Total number of sentiments: {}".format(df["sentiment"].nunique()))
 
     after_sentiment_merge = df["sentiment"].value_counts().plot(kind="bar", figsize=(25, 10)).get_figure()
     after_sentiment_merge.savefig(config.generic_path + 'after_sentiment_merge.jpeg')
@@ -189,6 +189,6 @@ def save_model(EPOCH, model, optimizer, LOSS, ACCURACY, PATH):
         'model_state_dict': model.state_dict(),
         'optimizer_state_dict': optimizer.state_dict(),
         'loss': LOSS,
-        'Accuracy': ACCURACY
+        'accuracy': ACCURACY
     }, PATH)
     print("Saved the model")

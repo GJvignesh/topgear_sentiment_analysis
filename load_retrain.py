@@ -50,12 +50,24 @@ optimizer = torch.optim.Adam(params=model.parameters(), lr=config.LEARNING_RATE)
 checkpoint = torch.load(config.checkpoint_path)
 model.load_state_dict(checkpoint['model_state_dict'])
 optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+
 epoch_list = []
-epoch_list.extend(checkpoint['epoch'])
+if type(checkpoint['epoch']) == int:
+    epoch_list.append(checkpoint['epoch'])
+if type(checkpoint['epoch']) == list:
+    epoch_list.extend(checkpoint['epoch'])
+
 loss_list = []
-loss_list.extend(checkpoint['loss'])
+if type(checkpoint['loss']) == int:
+    loss_list.append(checkpoint['loss'])
+if type(checkpoint['loss']) == list:
+    loss_list.extend(checkpoint['loss'])
+
 accuracy_list = []
-accuracy_list.extend(checkpoint['Accuracy'])
+if type(checkpoint['accuracy']) == int:
+    epoch_list.append(checkpoint['accuracy'])
+if type(checkpoint['accuracy']) == list:
+    epoch_list.extend(checkpoint['accuracy'])
 
 
 # Defining the training function on the 80% of the dataset for tuning the distilbert model
