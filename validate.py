@@ -47,6 +47,8 @@ def valid(model, testing_loader):
             mask = data['mask'].to(device, dtype=torch.long)
             targets = data['targets'].to(device, dtype=torch.long)
             outputs = model(ids, mask).squeeze()
+            print("OUTPUTS: {}".format(outputs))
+            print("targets: {}".format(targets))
             loss = loss_function(outputs, targets)
             tr_loss += loss.item()
             big_val, big_idx = torch.max(outputs.data, dim=1)
