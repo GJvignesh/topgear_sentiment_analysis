@@ -51,6 +51,8 @@ checkpoint = torch.load(config.checkpoint_path)
 model.load_state_dict(checkpoint['model_state_dict'])
 optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
 
+print(checkpoint)
+
 epoch_list = []
 if type(checkpoint['epoch']) == int:
     epoch_list.append(checkpoint['epoch'])
