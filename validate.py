@@ -6,6 +6,7 @@ import config
 import utility
 from tqdm import tqdm
 import triage
+import model
 from transformers import DistilBertTokenizer
 from torch.utils.data import Dataset, DataLoader
 
@@ -15,7 +16,9 @@ device = 'cuda' if cuda.is_available() else 'cpu'
 print("Available Device: {}".format(device))
 print("-"*60)
 
-model_loaded = torch.load(config.checkpoint_path)
+model = model.DistillBERTClass()  # Creating the model shape
+checkpoint = torch.load(config.checkpoint_path)  # Loading the model from check point
+model_loaded = model.load_state_dict(checkpoint['model_state_dict'])
 model_loaded.eval()
 model_loaded.to(device)  # Loading model to GPU
 
