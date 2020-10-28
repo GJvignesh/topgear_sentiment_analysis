@@ -7,6 +7,7 @@ import utility
 from tqdm import tqdm
 import triage
 import model
+import pandas as pd
 from transformers import DistilBertTokenizer
 from torch.utils.data import Dataset, DataLoader
 
@@ -87,7 +88,7 @@ test_params = {'batch_size': config.VALID_BATCH_SIZE,
                'shuffle': True,
                'num_workers': 0}
 
-validation_frame = config.df_valid_path.sample(frac=0.01) # for testing
+validation_frame = pd.read_csv(config.df_valid_path).sample(frac=0.01)  # for testing
 sentiment_map = dict(zip(validation_frame['sentiment'], validation_frame['sentiment'].astype("category").cat.codes))
 testing_set = triage.Triage(validation_frame, distill_tokenizer, config.MAX_LEN)
 testing_loader = DataLoader(testing_set, **test_params)
