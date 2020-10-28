@@ -91,12 +91,8 @@ test_params = {'batch_size': config.VALID_BATCH_SIZE,
 validation_frame_reduced, sentiment_map, sentiment_demap = utility.data_process(config.df_valid_path)
 validation_frame_reduced = validation_frame_reduced[["sentence","sentiment"]]
 validation_frame_reduced.columns = ["TITLE", "ENCODE_CAT"]
-validation_frame_reduced.reset_index(inplace=True)
-print(validation_frame_reduced.shape)
-print(validation_frame_reduced.head())
 validation_frame_reduced = validation_frame_reduced.sample(frac=0.01)
-print(validation_frame_reduced.shape)
-print(validation_frame_reduced.head())
+validation_frame_reduced.reset_index(inplace=True)
 
 testing_set = triage.Triage(validation_frame_reduced, distill_tokenizer, config.MAX_LEN)
 testing_loader = DataLoader(testing_set, **test_params)
