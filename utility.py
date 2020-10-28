@@ -84,7 +84,7 @@ def data_process(dataset_path):
     print("Total number of sentiments: ".format(df["sentiment"].nunique()))
 
     after_sentiment_merge = df["sentiment"].value_counts().plot(kind="bar", figsize=(25, 10)).get_figure()
-    after_sentiment_merge.savefig(config.generic_path+'after_sentiment_merge.jpeg')
+    after_sentiment_merge.savefig(config.generic_path + 'after_sentiment_merge.jpeg')
 
     # Setting to category type for encoding
     df["sentiment"] = df["sentiment"].astype("category")
@@ -128,7 +128,7 @@ def data_process(dataset_path):
     df_new_reduced = drop_target(target_list, df)
 
     final_distribution = df_new_reduced["sentiment"].value_counts().plot(kind="bar", figsize=(25, 10)).get_figure()
-    final_distribution.savefig(config.generic_path+'final_distribution.jpeg')
+    final_distribution.savefig(config.generic_path + 'final_distribution.jpeg')
 
     print("-" * 80)
     print("Total Number of reduced sentiment (number of targets)")
@@ -184,11 +184,11 @@ def get_max_len_sentence(df):
 
 
 def save_model(EPOCH, model, optimizer, LOSS, ACCURACY, PATH):
-  torch.save({
-            'epoch': EPOCH,
-            'model_state_dict': model.state_dict(),
-            'optimizer_state_dict': optimizer.state_dict(),
-            'loss': LOSS,
-            'Accuracy': ACCURACY
-            }, PATH)
-  print("Saved the model")
+    torch.save({
+        'epoch': EPOCH,
+        'model_state_dict': model.state_dict(),
+        'optimizer_state_dict': optimizer.state_dict(),
+        'loss': LOSS,
+        'Accuracy': ACCURACY
+    }, PATH)
+    print("Saved the model")
