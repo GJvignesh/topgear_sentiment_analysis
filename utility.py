@@ -193,7 +193,6 @@ def save_model(EPOCH, model, optimizer, LOSS, ACCURACY, PATH):
     }, PATH)
     print("Saved the model")
 
-
 def report(y_test, y_pred, sentiment_map):
     from sklearn.metrics import confusion_matrix
     from IPython.display import display
