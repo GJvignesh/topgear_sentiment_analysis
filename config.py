@@ -8,3 +8,4 @@ LEARNING_RATE = 1e-05
 checkpoint_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_31_unbalanced/pytorch_distilbert_31_unbalanced.pt"
 df_path = r"/content/drive/My Drive/AGJCSV/combained_train_processed_new.csv"
 generic_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_31_unbalanced/"
+df_valid_path = r"/content/drive/My Drive/AGJCSV/combained_validation_processed_new.csv"
