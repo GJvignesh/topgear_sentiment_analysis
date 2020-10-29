@@ -201,6 +201,8 @@ def report(y_test, y_pred, sentiment_map):
     import pandas as pd
 
     sorted_sentiment_map = list(sorted(sentiment_map.keys()))
+    print("sorted_sentiment_map: {}".format(sorted_sentiment_map))
+    print("len(sorted_sentiment_map): {}".format(len(sorted_sentiment_map)))
     confusion_matrix_df = pd.DataFrame(confusion_matrix(y_test, y_pred), index=sorted_sentiment_map)
     confusion_matrix_df.columns = sorted_sentiment_map
     # display( confusion_matrix_df.style.background_gradient(cmap ='viridis') )
