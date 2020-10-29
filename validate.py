@@ -115,4 +115,4 @@ validation_confusion_matrix_df, classification_report = utility.report(y_test=y_
 
 validation_confusion_matrix_df.to_excel(config.generic_path+"validation_confusion_matrix_df.xlsx")
 classification_report_df = pd.DataFrame(classification_report).transpose()
-classification_report_df.to_csv(config.generic_path+"classification_report.csv")
+classification_report_df.to_csv(config.generic_path+"validation_classification_report.csv")
