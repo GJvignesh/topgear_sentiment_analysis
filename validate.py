@@ -19,7 +19,7 @@ print("-"*60)
 
 model = model.DistillBERTClass()  # Creating the model shape
 model.to(device)
-checkpoint = torch.load(config.checkpoint_path)  # Loading the model from check point
+checkpoint = torch.load(config.checkpoint_path, map_location=device)  # Loading the model from check point
 model.load_state_dict(checkpoint['model_state_dict'])
 model.eval()
 model.to(device)  # Loading model to GPU
@@ -83,8 +83,8 @@ def valid(model, testing_loader):
 
     return epoch_accu, y_test_actual, y_test_predicted, y_test_predicted_prob_list
 
-# tst
 
+# tst
 # Initiate the tokenizer
 distill_tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-cased')
 
