@@ -8,6 +8,7 @@ from tqdm import tqdm
 import prepare_data
 import config
 import utility
+import telegram_bot as bot
 
 print("-"*80)
 device = 'cuda' if cuda.is_available() else 'cpu'
@@ -86,6 +87,7 @@ def retrain(epoch):
     nb_tr_steps = 0
     nb_tr_examples = 0
     model.train()
+    bot.telegram_bot_sendtext("re-training started for : " + config.generic_path)
     for _, data in enumerate(tqdm(training_loader, 0)):
         ids = data['ids'].to(device, dtype=torch.long)
         mask = data['mask'].to(device, dtype=torch.long)
@@ -123,6 +125,9 @@ def retrain(epoch):
         if _ % 5000 == 0:
             loss_step = tr_loss / nb_tr_steps
             accu_step = (n_correct * 100) / nb_tr_examples
+            bot.telegram_bot_sendtext(config.generic_path)
+            bot.telegram_bot_sendtext("Training Loss per 5000 steps: "+str(loss_step))
+            bot.telegram_bot_sendtext("Training Accuracy per 5000 steps: " + str(accu_step))
             print(f"Training Loss per 5000 steps: {loss_step}")
             print(f"Training Accuracy per 5000 steps: {accu_step}")
             print(strftime("%Y-%m-%d %H:%M:%S", gmtime()))
@@ -144,6 +149,10 @@ def retrain(epoch):
                        LOSS=loss_list, ACCURACY=accuracy_list,
                        PATH=config.checkpoint_path)
 
+    bot.telegram_bot_sendtext(config.generic_path)
+    bot.telegram_bot_sendtext("Final Training Loss Epoch " + str(epoch_loss))
+    bot.telegram_bot_sendtext("Final Training Accuracy Epoch: " + str(epoch_accu))
+    bot.telegram_bot_sendtext("EPOCH completed {Re-training}")
     print(f"Training Loss Epoch: {epoch_loss}")
     print(f"Training Accuracy Epoch: {epoch_accu}")
 
