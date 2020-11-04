@@ -3,6 +3,7 @@ from time import gmtime, strftime
 import torch
 from torch import cuda, nn
 from transformers import BertTokenizer, AdamW
+from sklearn.metrics import accuracy_score, f1_score, classification_report
 import model
 from tqdm import tqdm
 import prepare_data
@@ -102,7 +103,7 @@ def eval_model(model, valid_loader, loss_fn):
     y_test_actual = []
     # softmax = torch.nn.Softmax(dim=1)
     with torch.no_grad():
-        for _, data in enumerate(tqdm(testing_loader, 0)):
+        for _, data in enumerate(tqdm(valid_loader, 0)):
             ids = data['ids'].to(device, dtype=torch.long)
             mask = data['mask'].to(device, dtype=torch.long)
             targets = data['targets'].to(device, dtype=torch.long)
