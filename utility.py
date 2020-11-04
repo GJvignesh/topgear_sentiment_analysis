@@ -9,7 +9,7 @@ def data_process(dataset_path):
     # reading the data frame
     # df = pd.read_csv("/content/drive/My Drive/AGJCSV/combained_validation_processed.csv")
 
-    df = pd.read_csv(dataset_path)
+    df = pd.read_csv(dataset_path, encoding="ISO-8859-1")  # encoding to avoid UnicodeDecodeError
     df.isnull().sum(), df[df.duplicated()].shape
     # df["sentiment"] = df["sentiment"].astype('category').cat.codes.astype('int')
 

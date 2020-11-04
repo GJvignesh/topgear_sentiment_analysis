@@ -109,7 +109,7 @@ def train(epoch):
 
         optimizer.zero_grad()
         loss.backward()
-        nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+        nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0) # To avoid gradient explode
         # # When using GPU
         optimizer.step()
 
@@ -122,7 +122,7 @@ def train(epoch):
                        LOSS=epoch_loss, ACCURACY=epoch_accu,
                        PATH=config.checkpoint_path)
 
-    bot.telegram_bot_sendtext(generic_path)
+    bot.telegram_bot_sendtext(config.generic_path)
     bot.telegram_bot_sendtext("Final Training Loss Epoch " + str(epoch_loss))
     bot.telegram_bot_sendtext("Final Training Accuracy Epoch: " + str(epoch_accu))
     bot.telegram_bot_sendtext("EPOCH completed")
