@@ -207,7 +207,7 @@ for epoch in range(config.EPOCHS):
     graph['valid_epoch_accu_list'].append(valid_epoch_accu)
 
     validation_f1_score_macro = f1_score(y_valid_actual, y_valid_predicted, average="macro")
-
+    print("validation_f1_score_macro: {}".format(validation_f1_score_macro))
     if validation_f1_score_macro > best_validation_macro_f1score:
 
         # Creating check point
@@ -218,5 +218,6 @@ for epoch in range(config.EPOCHS):
         best_validation_macro_f1score = validation_f1_score_macro
         graph["best_validation_macro_f1score"] = best_validation_macro_f1score
 
+print("graph: {}".format(graph))
 utility.save_graph(graph_data= graph, path=config.generic_path)
 
