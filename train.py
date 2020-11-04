@@ -210,7 +210,7 @@ for epoch in range(config.EPOCHS):
 
     validation_f1_score_macro = f1_score(y_valid_actual, y_valid_predicted, average="macro")
 
-    if validation_f1_score_macro > best_validation_f1score:
+    if validation_f1_score_macro > best_validation_macro_f1score:
 
         # Creating check point
         utility.save_model(EPOCH=epoch, model=model, optimizer=optimizer,
@@ -218,7 +218,7 @@ for epoch in range(config.EPOCHS):
                            PATH=config.checkpoint_path)
 
         best_validation_macro_f1score = validation_f1_score_macro
+        graph["best_validation_macro_f1score"] = best_validation_macro_f1score
 
-graph["best_validation_macro_f1score"] = validation_f1_score_macro
 utility.save_graph(graph_data= graph, path=config.generic_path)
 

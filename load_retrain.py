@@ -166,10 +166,12 @@ Preprocess = prepare_data.Preprocess(dataframe=df_new_reduced,
                                      tokenizer=bert_tokenizer,
                                      max_len=config.MAX_LEN,
                                      train_batch_size=config.TRAIN_BATCH_SIZE,
-                                     valid_batch_size=config.VALID_BATCH_SIZE)
+                                     valid_batch_size=config.VALID_BATCH_SIZE,
+                                     test_batch_size=config.TEST_BATCH_SIZE)
 
 # Accessing the process_data_for_model method of Preprocess class
-training_loader, testing_loader = Preprocess.process_data_for_model()
+training_loader, valid_loader, testing_loader = Preprocess.process_data_for_model()
+
 
 model = model.BERTClass()
 model.to(device)
@@ -188,7 +190,7 @@ model.to(device)
 
 #############################################################################################
 
-graph["best_validation_macro_f1score"] = best_validation_macro_f1score
+best_validation_macro_f1score = graph["best_validation_macro_f1score"]
 
 # Continue the training
 for epoch in range(config.EPOCHS):
@@ -206,7 +208,7 @@ for epoch in range(config.EPOCHS):
 
     validation_f1_score_macro = f1_score(y_valid_actual, y_valid_predicted, average="macro")
 
-    if validation_f1_score_macro > best_validation_f1score:
+    if validation_f1_score_macro > best_validation_macro_f1score:
 
         # Creating check point
         utility.save_model(EPOCH=epoch, model=model, optimizer=optimizer,
@@ -214,7 +216,7 @@ for epoch in range(config.EPOCHS):
                            PATH=config.checkpoint_path)
 
         best_validation_macro_f1score = validation_f1_score_macro
+        graph["best_validation_macro_f1score"] = best_validation_macro_f1score
 
-graph["best_validation_macro_f1score"] = validation_f1_score_macro
 utility.save_graph(graph_data= graph, path=config.generic_path)
 
