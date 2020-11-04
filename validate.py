@@ -10,6 +10,7 @@ import pandas as pd
 from transformers import BertTokenizer, AdamW
 from torch.utils.data import Dataset, DataLoader
 
+
 print("-" * 60)
 device = 'cuda' if cuda.is_available() else 'cpu'
 print("Available Device: {}".format(device))
@@ -23,15 +24,14 @@ model.eval()
 model.to(device)  # Loading model to GPU
 
 # Validation
-# Creating the loss function and optimizer
+# Creating the loss function
+# Optimizer is not needed since its for prediction
 loss_function = torch.nn.CrossEntropyLoss()
 
 
 def valid(model, testing_loader):
     model.eval()
     n_correct = 0;
-    n_wrong = 0;
-    total = 0
     tr_loss = 0
     nb_tr_steps = 0
     nb_tr_examples = 0
@@ -82,7 +82,6 @@ def valid(model, testing_loader):
     return epoch_accu, y_test_actual, y_test_predicted, y_test_predicted_prob_list
 
 
-# tst
 # Initiate the tokenizer
 bert_tokenizer = BertTokenizer.from_pretrained(config.PRE_TRAINED_MODEL_NAME)
 
