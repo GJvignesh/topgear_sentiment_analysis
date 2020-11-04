@@ -25,7 +25,7 @@ class Preprocess(triage.Triage):
         print("Splitting the data")
 
         # Taking sentence and sentiment alone
-        train_dataset, test_dataset = train_test_split(self.data[["sentence", "sentiment"]], train_size=0.8,
+        train_dataset, test_dataset = train_test_split(self.data[["sentence", "sentiment"]], train_size=0.7,
                                                        random_state=1, stratify=self.data["sentiment"])
 
         valid_dataset, test_dataset = train_test_split(test_dataset[["sentence", "sentiment"]], train_size=0.5,
