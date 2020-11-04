@@ -1,6 +1,6 @@
 # Defining some key variables that will be used later on in the training
 
-MAX_LEN = 64  # 6081 is more than 60 len out of 2238471 which is just 0.2%
+MAX_LEN = 64  # 6081 datapoints are more than 60 length out of 2238471 which is just 0.2% of dataset
 TRAIN_BATCH_SIZE = 16  # 8,16,32,64
 VALID_BATCH_SIZE = 16  # 8,16,32,64
 TEST_BATCH_SIZE = 16  # 8,16,32,64
