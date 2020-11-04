@@ -13,7 +13,7 @@ import prepare_data
 import config
 import utility
 import telegram_bot as bot
-import validate
+
 
 # Setting up the device for GPU usage
 print("-" * 60)

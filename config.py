@@ -9,7 +9,7 @@ LEARNING_RATE = 2e-05  # 5e-5, 3e-5, 2e-5
 PRE_TRAINED_MODEL_NAME = 'bert-base-cased'
 
 checkpoint_path = r"/content/drive/My Drive/AGJCSV/models/bert_31_1epoch/pytorch_bert_31_balanced.pt"
-df_path = r"C:/Users/vgopalja.PARTNERS/bert_multiclass/comabined_bert_df.csv"  # (2244552, 2)
+df_path = r"/content/drive/My Drive/AGJCSV/comabined_bert_df.csv"  # (2244552, 2)
 generic_path = r"/content/drive/My Drive/AGJCSV/models/bert_31_1epoch/"
 # df_valid_path = r"/content/drive/My Drive/AGJCSV/combained_validation_processed_bert.csv"
 

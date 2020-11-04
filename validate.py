@@ -11,6 +11,7 @@ import config
 import utility
 import triage
 import model
+import prepare_data
 
 print("-" * 60)
 device = 'cuda' if cuda.is_available() else 'cpu'

@@ -28,7 +28,7 @@ class Preprocess(triage.Triage):
         train_dataset, test_dataset = train_test_split(self.data[["sentence", "sentiment"]], train_size=0.8,
                                                        random_state=1, stratify=self.data["sentiment"])
 
-        valid_dataset, test_dataset = train_test_split(test_dataset[["sentence", "sentiment"]], test_size=0.5,
+        valid_dataset, test_dataset = train_test_split(test_dataset[["sentence", "sentiment"]], train_size=0.5,
                                                        random_state=1, stratify=test_dataset["sentiment"])
 
         print("train_dataset.shape: {}".format(train_dataset.shape))
