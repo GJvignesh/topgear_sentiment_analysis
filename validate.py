@@ -1,35 +1,24 @@
 # Setting up the device for GPU usage
 import torch
 from torch import cuda, nn
-import config
-import utility
 from tqdm import tqdm
-import triage
-import model
 import pandas as pd
+import pickle
 from transformers import BertTokenizer, AdamW
 from torch.utils.data import Dataset, DataLoader
 
+import config
+import utility
+import triage
+import model
 
 print("-" * 60)
 device = 'cuda' if cuda.is_available() else 'cpu'
 print("Available Device: {}".format(device))
 print("-" * 60)
 
-model = model.BERTClass()  # Creating the model shape
-model.to(device)
-checkpoint = torch.load(config.checkpoint_path, map_location=device)  # Loading the model from check point
-model.load_state_dict(checkpoint['model_state_dict'])
-model.eval()
-model.to(device)  # Loading model to GPU
 
-# Validation
-# Creating the loss function
-# Optimizer is not needed since its for prediction
-loss_function = torch.nn.CrossEntropyLoss()
-
-
-def valid(model, testing_loader):
+def valid(model, testing_loader, loss_fn):
     model.eval()
     n_correct = 0;
     tr_loss = 0
@@ -47,7 +36,7 @@ def valid(model, testing_loader):
             outputs = model(ids, mask)
             # print("OUTPUTS: {}".format(outputs))
             # print("targets: {}".format(targets))
-            loss = loss_function(outputs, targets)
+            loss = loss_fn(outputs, targets)
             tr_loss += loss.item()
             big_val, big_idx = torch.max(outputs.data, dim=1)
             y_test_predicted_prob = softmax(outputs.data)
@@ -79,36 +68,65 @@ def valid(model, testing_loader):
     print(f"Validation Loss Epoch: {epoch_loss}")
     print(f"Validation Accuracy Epoch: {epoch_accu}")
 
-    return epoch_accu, y_test_actual, y_test_predicted, y_test_predicted_prob_list
+    return epoch_loss, epoch_accu, y_test_actual, y_test_predicted, y_test_predicted_prob_list
 
+
+##################################################################
+
+# Prepare the data
+df_path = config.df_path
+
+# This will give reduced sentiment [FYI: Its excepting preprocessed dataframe]
+df_new_reduced, sentiment_map, sentiment_demap = utility.data_process(dataset_path=df_path)
+
+# df_new_reduced sentiment is already encoded
+class_weight = utility.get_weight(df_new_reduced)
 
 # Initiate the tokenizer
 bert_tokenizer = BertTokenizer.from_pretrained(config.PRE_TRAINED_MODEL_NAME)
 
-test_params = {'batch_size': config.VALID_BATCH_SIZE,
-               'shuffle': True,
-               'num_workers': 0}
+# Creating instance of Preprocess
+# This Preprocess internally Triage class
+# This will split data and encode using passing tokenizer
+# Creating instance of the class
+Preprocess = prepare_data.Preprocess(dataframe=df_new_reduced,
+                                     tokenizer=bert_tokenizer,
+                                     max_len=config.MAX_LEN,
+                                     train_batch_size=config.TRAIN_BATCH_SIZE,
+                                     valid_batch_size=config.VALID_BATCH_SIZE,
+                                     test_batch_size=config.TEST_BATCH_SIZE)
 
-validation_frame_reduced, sentiment_map, sentiment_demap = utility.data_process(config.df_valid_path)
-validation_frame_reduced = validation_frame_reduced[["sentence", "sentiment"]]
-validation_frame_reduced.columns = ["TITLE", "ENCODE_CAT"]
-validation_frame_reduced = validation_frame_reduced.sample(frac=0.01)
-validation_frame_reduced.reset_index(inplace=True)
+# Accessing the process_data_for_model method of Preprocess class
+training_loader, valid_loader, testing_loader = Preprocess.process_data_for_model()
 
-testing_set = triage.Triage(validation_frame_reduced, bert_tokenizer, config.MAX_LEN)
-testing_loader = DataLoader(testing_set, **test_params)
+#################################################################################
+model = model.BERTClass()  # Creating the model shape
+model.to(device)
 
-print('This is the validation section to print the accuracy and see how it performs')
-print('Here we are leveraging on the dataloader crearted for the validation dataset, the approach is using more of pytorch')
+# Loading back the model from checkpoint
+checkpoint = torch.load(config.checkpoint_path, map_location=device)  # Loading the model from check point
+model.load_state_dict(checkpoint['model_state_dict'])
+model.eval()
+model.to(device)  # Loading model to GPU
 
-acc, y_test_actual, y_test_predicted, y_test_predicted_prob_list = valid(model, testing_loader)
+# Validation on test data
+# Creating the loss function
+# Optimizer is not needed since its for prediction
+loss_function = torch.nn.CrossEntropyLoss()
 
-print("Accuracy on test data = %0.2f%%" % acc)
+test_loss, test_accu, y_test_actual, y_test_predicted, y_test_predicted_prob_list = valid(model=model,
+                                                                                          testing_loader=testing_loader,
+                                                                                          loss_fn=loss_function)
 
-validation_confusion_matrix_df, classification_report = utility.report(y_test=y_test_actual,
+print("Loss on test data = %0.2f%%" % test_loss)
+print("Accuracy on test data = %0.2f%%" % test_accu)
+
+
+test_confusion_matrix_df, classification_report = utility.report(y_test=y_test_actual,
                                                                        y_pred=y_test_predicted,
                                                                        sentiment_map=sentiment_map)
 
-validation_confusion_matrix_df.to_excel(config.generic_path + "validation_confusion_matrix_df.xlsx")
+
+test_confusion_matrix_df.to_excel(config.generic_path + "test_confusion_matrix_df.xlsx")
 classification_report_df = pd.DataFrame(classification_report).transpose()
-classification_report_df.to_csv(config.generic_path + "validation_classification_report.csv")
+classification_report_df.to_csv(config.generic_path + "test_classification_report.csv")
