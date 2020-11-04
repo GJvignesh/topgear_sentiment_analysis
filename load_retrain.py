@@ -9,7 +9,6 @@ import prepare_data
 import config
 import utility
 import telegram_bot as bot
-import validate
 
 print("-" * 80)
 device = 'cuda' if cuda.is_available() else 'cpu'
@@ -208,6 +207,8 @@ for epoch in range(config.EPOCHS):
 
     validation_f1_score_macro = f1_score(y_valid_actual, y_valid_predicted, average="macro")
     print("validation_f1_score_macro: {}".format(validation_f1_score_macro))
+    graph['validation_f1_score_macro_list'].append(validation_f1_score_macro)
+
     if validation_f1_score_macro > best_validation_macro_f1score:
 
         # Creating check point

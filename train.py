@@ -209,6 +209,9 @@ for epoch in range(config.EPOCHS):
     graph['valid_epoch_accu_list'].append(valid_epoch_accu)
 
     validation_f1_score_macro = f1_score(y_valid_actual, y_valid_predicted, average="macro")
+
+    graph['validation_f1_score_macro_list'].append(validation_f1_score_macro)
+
     print("validation_f1_score_macro: {}".format(validation_f1_score_macro))
     if validation_f1_score_macro > best_validation_macro_f1score:
 
