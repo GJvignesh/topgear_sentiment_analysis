@@ -177,7 +177,7 @@ Preprocess = prepare_data.Preprocess(dataframe=df_new_reduced,
 # Accessing the process_data_for_model method of Preprocess class
 training_loader, valid_loader, testing_loader = Preprocess.process_data_for_model()
 
-model = model.BERTClass()  # instance of the bert own model
+model = model.DistillBERTClass()  # instance of the bert own model
 model.to(device)  # passing to GPU
 
 # Creating the loss function and optimizer

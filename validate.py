@@ -101,7 +101,7 @@ Preprocess = prepare_data.Preprocess(dataframe=df_new_reduced,
 training_loader, valid_loader, testing_loader = Preprocess.process_data_for_model()
 
 #################################################################################
-model = model.BERTClass()  # Creating the model shape
+model = model.DistillBERTClass()  # Creating the model shape
 model.to(device)
 
 # Loading back the model from checkpoint
