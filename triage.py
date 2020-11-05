@@ -1,5 +1,8 @@
 import torch
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset
+
+# This class extends Dataset class of torch.utils.data
+"""This expects dataframe to be passed with column "TITLE" and "ENCODE_CAT" """
 
 
 class Triage(Dataset):
@@ -33,4 +36,3 @@ class Triage(Dataset):
 
     def __len__(self):
         return self.len
-
