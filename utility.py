@@ -232,12 +232,11 @@ def save_graph(graph_data, path=os.getcwd() + "/"):
         pickle.dump(graph_data, fp, protocol=pickle.HIGHEST_PROTOCOL)
 
 
-def load_graph(path=os.getcwd() + "/"):
+def load_graph(path=os.getcwd()):
     try:
         with open(path + "graph_data.txt", "rb") as fp:
             # pickle.dump(validate_data, fp)
             graph_dict = pickle.load(fp)
     except FileNotFoundError:
         print("No file named validate.txt")
-
     return graph_dict
