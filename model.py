@@ -1,5 +1,7 @@
 import torch
 from transformers import DistilBertModel
+import config
+
 
 # Creating the customized model,
 # by adding a drop out and a dense layer on top of distil
@@ -9,10 +11,10 @@ from transformers import DistilBertModel
 class DistillBERTClass(torch.nn.Module):
     def __init__(self):
         super(DistillBERTClass, self).__init__()
-        self.l1 = DistilBertModel.from_pretrained("distilbert-base-uncased")
-        self.pre_classifier = torch.nn.Linear(768, 768)
-        self.dropout = torch.nn.Dropout(0.3)
-        self.classifier = torch.nn.Linear(768, 31)
+        self.l1 = DistilBertModel.from_pretrained(config.PRE_TRAINED_MODEL_NAME)
+        self.pre_classifier = torch.nn.Linear(768, 768)  # O/P of the bert
+        self.dropout = torch.nn.Dropout(0.3)  # Just a dropout
+        self.classifier = torch.nn.Linear(768, 31)  # Since we combined sentiment to 31 targets
         # self.softmax = torch.nn.Softmax(dim=1)
 
     def forward(self, input_ids, attention_mask):

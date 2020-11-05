@@ -3,13 +3,20 @@ import torch
 import pandas as pd
 from tqdm import tqdm
 import config
+import pickle
+import os
+from sklearn.metrics import confusion_matrix
+from IPython.display import display
+from collections import defaultdict
+from sklearn.metrics import accuracy_score, f1_score, classification_report
+import pandas as pd
 
 
 def data_process(dataset_path):
     # reading the data frame
     # df = pd.read_csv("/content/drive/My Drive/AGJCSV/combained_validation_processed.csv")
 
-    df = pd.read_csv(dataset_path)
+    df = pd.read_csv(dataset_path, encoding="ISO-8859-1")  # encoding to avoid UnicodeDecodeError
     df.isnull().sum(), df[df.duplicated()].shape
     # df["sentiment"] = df["sentiment"].astype('category').cat.codes.astype('int')
 
@@ -193,11 +200,8 @@ def save_model(EPOCH, model, optimizer, LOSS, ACCURACY, PATH):
     }, PATH)
     print("Saved the model")
 
+
 def report(y_test, y_pred, sentiment_map):
-    from sklearn.metrics import confusion_matrix
-    from IPython.display import display
-    from sklearn.metrics import accuracy_score, f1_score, classification_report
-    import pandas as pd
 
     sorted_sentiment_map = list(sorted(sentiment_map.keys()))
     print("sorted_sentiment_map: {}".format(sorted_sentiment_map))
@@ -219,3 +223,23 @@ def report(y_test, y_pred, sentiment_map):
     display(confusion_matrix_df.style.background_gradient(cmap='viridis', axis=1))
 
     return confusion_matrix_df.style.background_gradient(cmap='viridis', axis=1), report
+
+
+def save_graph(graph_data, path=os.getcwd()):
+    # graph_data is default dict
+    with open(path + "graph_data.txt", "wb") as fp:
+        print("graph_data.txt is saved to {}".format(path))
+        pickle.dump(graph_data, fp, protocol=pickle.HIGHEST_PROTOCOL)
+
+
+def load_graph(path=os.getcwd()):
+    try:
+        with open(path + "graph_data.txt", "rb") as fp:
+            # pickle.dump(validate_data, fp)
+            graph_dict = pickle.load(fp)
+
+        return graph_dict
+    except FileNotFoundError:
+        print("No file named validate.txt")
+
+    return "Nill"
