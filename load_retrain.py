@@ -229,4 +229,5 @@ for epoch in range(config.EPOCHS):
 
     print("graph: {}".format(graph))
     utility.save_graph(graph_data= graph, path=config.generic_path)
+    bot.telegram_bot_sendtext(graph)
 
