@@ -201,6 +201,14 @@ for epoch in range(config.EPOCHS):
                                                                                        valid_loader=valid_loader,
                                                                                        loss_fn=loss_function)
 
+    validation_confusion_matrix_df, classification_report = utility.report(y_test=y_valid_actual,
+                                                                     y_pred=y_valid_predicted,
+                                                                     sentiment_map=sentiment_map)
+
+    validation_confusion_matrix_df.to_excel(config.generic_path + "validation_confusion_matrix_df.xlsx")
+    classification_report_df = pd.DataFrame(classification_report).transpose()
+    classification_report_df.to_csv(config.generic_path + "validation_classification_report.csv")
+
     graph["train_epoch_loss_list"].append(train_epoch_loss)
     graph['train_epoch_accu_list'].append(train_epoch_accu)
     graph['valid_epoch_loss_list'].append(valid_epoch_loss)
