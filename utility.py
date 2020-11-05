@@ -237,6 +237,9 @@ def load_graph(path=os.getcwd()):
         with open(path + "graph_data.txt", "rb") as fp:
             # pickle.dump(validate_data, fp)
             graph_dict = pickle.load(fp)
+
+        return graph_dict
     except FileNotFoundError:
         print("No file named validate.txt")
-    return graph_dict
+
+    return "Nill"
