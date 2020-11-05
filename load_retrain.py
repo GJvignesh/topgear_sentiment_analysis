@@ -183,6 +183,7 @@ print("Class Weight: {}".format(class_weight))
 optimizer = AdamW(params=model.parameters(), lr=config.LEARNING_RATE)
 
 # Loading from best check point
+print("Loading from best check point")
 checkpoint = torch.load(config.checkpoint_path)
 model.load_state_dict(checkpoint['model_state_dict'])
 optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
