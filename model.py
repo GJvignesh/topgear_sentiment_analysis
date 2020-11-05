@@ -11,7 +11,7 @@ import config
 class DistillBERTClass(torch.nn.Module):
     def __init__(self):
         super(DistillBERTClass, self).__init__()
-        self.l1 = BertModel.from_pretrained(config.PRE_TRAINED_MODEL_NAME)
+        self.l1 = DistilBertModel.from_pretrained(config.PRE_TRAINED_MODEL_NAME)
         self.pre_classifier = torch.nn.Linear(768, 768)  # O/P of the bert
         self.dropout = torch.nn.Dropout(0.3)  # Just a dropout
         self.classifier = torch.nn.Linear(768, 31)  # Since we combined sentiment to 31 targets
