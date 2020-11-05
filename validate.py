@@ -80,8 +80,6 @@ df_path = config.df_path
 # This will give reduced sentiment [FYI: Its excepting preprocessed dataframe]
 df_new_reduced, sentiment_map, sentiment_demap = utility.data_process(dataset_path=df_path)
 
-# df_new_reduced sentiment is already encoded
-class_weight = utility.get_weight(df_new_reduced)
 
 # Initiate the tokenizer
 bert_tokenizer = BertTokenizer.from_pretrained(config.PRE_TRAINED_MODEL_NAME)

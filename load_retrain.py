@@ -152,8 +152,6 @@ df_path = config.df_path
 
 df_new_reduced, sentiment_map, sentiment_demap = utility.data_process(dataset_path=df_path)
 
-# df_new_reduced sentiment is already encoded
-class_weight = utility.get_weight(df_new_reduced)
 
 # Initiate the tokenizer
 bert_tokenizer = BertTokenizer.from_pretrained(config.PRE_TRAINED_MODEL_NAME)
@@ -177,8 +175,8 @@ model = model.BERTClass()
 model.to(device)
 
 # Creating the loss function and optimizer
-loss_function = torch.nn.CrossEntropyLoss(weight=class_weight.to(device))
-print("Class Weight: {}".format(class_weight))
+loss_function = torch.nn.CrossEntropyLoss()  # without weight vector (to increase the accuracy score)
+
 # optimizer = torch.optim.Adam(params=model.parameters(), lr=config.LEARNING_RATE)
 optimizer = AdamW(params=model.parameters(), lr=config.LEARNING_RATE)
 
@@ -191,7 +189,7 @@ model.to(device)
 
 #############################################################################################
 
-best_validation_macro_f1score = graph["best_validation_macro_f1score"]
+best_validation_accuracy = graph["best_validation_accuracy"]
 
 # Continue the training
 for epoch in range(config.EPOCHS):
@@ -219,15 +217,15 @@ for epoch in range(config.EPOCHS):
     print("validation_f1_score_macro: {}".format(validation_f1_score_macro))
     graph['validation_f1_score_macro_list'].append(validation_f1_score_macro)
 
-    if validation_f1_score_macro > best_validation_macro_f1score:
+    if valid_epoch_accu > best_validation_accuracy:
 
         # Creating check point
         utility.save_model(EPOCH=epoch, model=model, optimizer=optimizer,
                            LOSS=train_epoch_loss, ACCURACY=train_epoch_accu,
                            PATH=config.checkpoint_path)
 
-        best_validation_macro_f1score = validation_f1_score_macro
-        graph["best_validation_macro_f1score"] = best_validation_macro_f1score
+        best_validation_accuracy = valid_epoch_accu
+        graph["best_validation_accuracy"] = best_validation_accuracy
 
     print("graph: {}".format(graph))
     utility.save_graph(graph_data= graph, path=config.generic_path)
