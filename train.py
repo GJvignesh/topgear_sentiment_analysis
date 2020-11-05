@@ -231,6 +231,6 @@ for epoch in range(config.EPOCHS):
         best_validation_macro_f1score = validation_f1_score_macro
         graph["best_validation_macro_f1score"] = best_validation_macro_f1score
 
-print("graph: {}".format(graph))
-utility.save_graph(graph_data= graph, path=config.generic_path)
+    print("graph: {}".format(graph))
+    utility.save_graph(graph_data= graph, path=config.generic_path)
 

@@ -225,7 +225,7 @@ def report(y_test, y_pred, sentiment_map):
     return confusion_matrix_df.style.background_gradient(cmap='viridis', axis=1), report
 
 
-def save_graph(graph_data, path=os.getcwd() + "/"):
+def save_graph(graph_data, path=os.getcwd()):
     # graph_data is default dict
     with open(path + "graph_data.txt", "wb") as fp:
         print("graph_data.txt is saved to {}".format(path))
