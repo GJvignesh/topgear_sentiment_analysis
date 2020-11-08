@@ -78,6 +78,7 @@ def valid(model, testing_loader, loss_fn):
 df_path = config.df_path
 
 df = pd.read_csv(df_path, encoding="ISO-8859-1")
+df = df.frac(0.0001)
 print("df.shape: {}".format(df.shape))
 
 # Preprocess the data
@@ -86,8 +87,6 @@ test_data = df["sentence"].apply(utility.preprocess)
 test_data = pd.DataFrame(test_data)
 test_data["sentiment"] = df["sentiment"]
 test_data.dropna(inplace=True)
-test_data.frac(0.0001)
-
 
 
 print("type(test_data): {}".format(type(test_data)))
