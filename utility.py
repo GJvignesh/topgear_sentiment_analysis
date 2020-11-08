@@ -283,6 +283,7 @@ def test_data_process(dataset):
     print("-" * 80)
     print("Total Number of reduced sentiment (number of targets)")
     print(df_new_reduced["sentiment"].nunique())
+    df_new_reduced.dropna(inplace=True)
 
     # Encode mapping (categorical encoding of the target)
     sentiment_map = dict(zip(df_new_reduced['sentiment'], df_new_reduced['sentiment'].astype("category").cat.codes))
