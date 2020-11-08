@@ -11,6 +11,7 @@ import config
 import utility
 import triage
 from model import DistillBERTClass
+import model
 import prepare_data
 
 print("-" * 60)
