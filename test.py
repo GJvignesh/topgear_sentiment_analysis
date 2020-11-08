@@ -86,6 +86,9 @@ test_data = df["sentence"].apply(utility.preprocess)
 test_data = pd.DataFrame(test_data)
 test_data["sentiment"] = df["sentiment"]
 test_data.dropna(inplace=True)
+test_data.frac(0.0001)
+
+
 
 print("type(test_data): {}".format(type(test_data)))
 print("test_data.shape: {}".format(test_data.shape))
@@ -112,12 +115,13 @@ Preprocess = prepare_data.Preprocess(dataframe=df_new_reduced,
 testing_loader = Preprocess.process_data_for_test()
 
 #################################################################################
-model = model.DistillBERTClass()  # Creating the model shape
-model.to(device)
+# model = model.DistillBERTClass()  # Creating the model shape
+# model.to(device)
 
 # Loading back the model from checkpoint
-checkpoint = torch.load(config.checkpoint_path, map_location=device)  # Loading the model from check point
-model.load_state_dict(checkpoint['model_state_dict'])
+# checkpoint = torch.load(config.checkpoint_path, map_location=device)  # Loading the model from check point
+# model.load_state_dict(checkpoint['model_state_dict'])
+model = torch.load(config.checkpoint_path, map_location=device)
 model.eval()
 model.to(device)  # Loading model to GPU
 
@@ -138,6 +142,14 @@ test_confusion_matrix_df, classification_report = utility.report(y_test=y_test_a
                                                                        y_pred=y_test_predicted,
                                                                        sentiment_map=sentiment_map)
 
+with open(config.generic_path + "y_test_actual.txt", "w") as outfile:
+    outfile.write("\n".join(y_test_actual))
+
+with open(config.generic_path + "y_test_predicted.txt", "w") as outfile:
+    outfile.write("\n".join(y_test_predicted))
+
+with open(config.generic_path + "y_test_predicted_prob_list.txt", "w") as outfile:
+    outfile.write("\n".join(y_test_predicted_prob_list))
 
 test_confusion_matrix_df.to_excel(config.generic_path + "test_confusion_matrix_df.xlsx")
 classification_report_df = pd.DataFrame(classification_report).transpose()
