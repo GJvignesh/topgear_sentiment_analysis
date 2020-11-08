@@ -83,6 +83,7 @@ print("df.shape: {}".format(df.shape))
 # Preprocess the data
 print("Cleaning the data: removing, punctuation, stopwords, https, contradiction")
 test_data = df["sentence"].apply(utility.preprocess)
+test_data = pd.DataFrame(test_data)
 test_data["sentiment"] = df["sentiment"]
 test_data.dropna(inplace=True)
 
