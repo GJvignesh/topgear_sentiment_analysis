@@ -293,7 +293,7 @@ def test_data_process(dataset):
     print("df.shape: {}".format(df_new_reduced.shape))
     print("df.columns: {}".format(df_new_reduced.columns))
 
-    return df_new_reduced, sentiment_map, sentiment_demap
+    return df_new_reduced["sentence","sentiment"], sentiment_map, sentiment_demap
 
 
 def get_weight(df):
