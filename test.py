@@ -83,15 +83,12 @@ print("df.shape: {}".format(df.shape))
 # Preprocess the data
 print("Cleaning the data: removing, punctuation, stopwords, https, contradiction")
 test_data = df["sentence"].apply(utility.preprocess)
-try:
-    test_data["sentiment"] = df["sentiment"]
-except e:
-    print("Make sure you have sentiment column, that is used to generate report")
-
+test_data["sentiment"] = df["sentiment"]
+test_data.dropna(inplace=True)
 
 print("type(test_data): {}".format(type(test_data)))
 print("test_data.shape: {}".format(test_data.shape))
-test_data.reset_index(inplace=True)
+
 # This will give reduced sentiment [FYI: Its excepting preprocessed dataframe]
 df_new_reduced, sentiment_map, sentiment_demap = utility.test_data_process(dataset=test_data)
 
