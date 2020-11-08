@@ -89,6 +89,8 @@ except e:
     print("Make sure you have sentiment column, that is used to generate report")
 
 test_data.reset_index(inplace=True)
+print("type(test_data): {}".format(type(test_data)))
+print("test_data.shape: {}".format(test_data.shape))
 # This will give reduced sentiment [FYI: Its excepting preprocessed dataframe]
 df_new_reduced, sentiment_map, sentiment_demap = utility.test_data_process(dataset=test_data)
 
