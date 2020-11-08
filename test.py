@@ -81,7 +81,7 @@ df = pd.read_csv(df_path, encoding="ISO-8859-1")
 print("df.shape: {}".format(df.shape))
 
 # Preprocess the data
-print("Cleaning the data")
+print("Cleaning the data: removing punt, stopword, https, contradiction")
 test_data = df["sentence"].apply(utility.preprocess)
 try:
     test_data["sentiment"] = df_path["sentiment"]
