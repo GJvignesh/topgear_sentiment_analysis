@@ -10,7 +10,7 @@ from torch.utils.data import Dataset, DataLoader
 import config
 import utility
 import triage
-import model
+from model import DistillBERTClass
 import prepare_data
 
 print("-" * 60)
