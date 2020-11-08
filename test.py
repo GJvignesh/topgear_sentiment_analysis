@@ -77,13 +77,20 @@ def valid(model, testing_loader, loss_fn):
 # Prepare the data
 df_path = config.df_path
 
+df = pd.read_csv(df_path, encoding="ISO-8859-1")
+print("df.shape: {}".format(df.shape))
+
 # Preprocess the data
-test_data = df_path["sentence"].apply(utility.preprocess)
-test_data["sentiment"] = df_path["sentiment"]
+print("Cleaning the data")
+test_data = df["sentence"].apply(utility.preprocess)
+try:
+    test_data["sentiment"] = df_path["sentiment"]
+except e:
+    print("Make sure you have sentiment column, that is used to generate report")
 
 
 # This will give reduced sentiment [FYI: Its excepting preprocessed dataframe]
-df_new_reduced, sentiment_map, sentiment_demap = utility.data_process(dataset_path=test_data)
+df_new_reduced, sentiment_map, sentiment_demap = utility.test_data_process(dataset=test_data)
 
 
 # Initiate the tokenizer
