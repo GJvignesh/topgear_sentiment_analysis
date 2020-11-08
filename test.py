@@ -114,8 +114,8 @@ Preprocess = prepare_data.Preprocess(dataframe=df_new_reduced,
 testing_loader = Preprocess.process_data_for_test()
 
 #################################################################################
-# model = model.DistillBERTClass()  # Creating the model shape
-# model.to(device)
+model = model.DistillBERTClass()  # Creating the model shape
+model.to(device)
 
 # Loading back the model from checkpoint
 # checkpoint = torch.load(config.checkpoint_path, map_location=device)  # Loading the model from check point
