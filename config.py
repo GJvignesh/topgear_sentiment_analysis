@@ -9,7 +9,10 @@ LEARNING_RATE = 1e-05  # 5e-5, 3e-5, 2e-5
 PRE_TRAINED_MODEL_NAME = 'distilbert-base-cased'
 
 
-checkpoint_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_31_unbalanced/pytorch_distilbert_31_unbalanced.pt"
+# checkpoint_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_31_unbalanced/pytorch_distilbert_31_unbalanced.pt"
+
+
+checkpoint_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_31_unbalanced/pytorch_distilbert_31_unbalanced_full.pt"
 generic_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_31_unbalanced/"
 df_path = r"/content/drive/My Drive/AGJCSV/comabined_bert_df.csv"  # (2244552, 2)
 
