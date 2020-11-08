@@ -70,3 +70,27 @@ class Preprocess(triage.Triage):
         testing_loader = DataLoader(testing_set, **test_params)
 
         return training_loader, valid_loader, testing_loader
+
+    def process_data_for_test(self):
+
+        # Taking the entire data and assigning to test_dataset
+        print("self.data.shape: {}".format(self.data.shape))
+        test_dataset = self.data
+
+        # column renaming
+        test_dataset.columns = ["TITLE", "ENCODE_CAT"]
+
+        # resetting the index
+        test_dataset.reset_index(inplace=True)
+
+        # Here we are calling Triage class which inherits the Dataset class
+        testing_set = triage.Triage(test_dataset, self.tokenizer, self.max_len)
+
+        test_params = {'batch_size': self.test_batch_size,
+                       'shuffle': True,
+                       'num_workers': 0
+                       }
+
+        testing_loader = DataLoader(testing_set, **test_params)
+
+        return testing_loader
