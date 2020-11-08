@@ -143,13 +143,13 @@ test_confusion_matrix_df, classification_report = utility.report(y_test=y_test_a
                                                                        sentiment_map=sentiment_map)
 
 with open(config.generic_path + "y_test_actual.txt", "w") as outfile:
-    outfile.write("\n".join(y_test_actual))
+    outfile.write("\n".join(str(y_test_actual)))
 
 with open(config.generic_path + "y_test_predicted.txt", "w") as outfile:
-    outfile.write("\n".join(y_test_predicted))
+    outfile.write("\n".join(str(y_test_predicted)))
 
 with open(config.generic_path + "y_test_predicted_prob_list.txt", "w") as outfile:
-    outfile.write("\n".join(y_test_predicted_prob_list))
+    outfile.write("\n".join(str(y_test_predicted_prob_list)))
 
 test_confusion_matrix_df.to_excel(config.generic_path + "test_confusion_matrix_df.xlsx")
 classification_report_df = pd.DataFrame(classification_report).transpose()
