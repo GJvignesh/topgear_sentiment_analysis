@@ -84,7 +84,7 @@ print("df.shape: {}".format(df.shape))
 print("Cleaning the data: removing punt, stopword, https, contradiction")
 test_data = df["sentence"].apply(utility.preprocess)
 try:
-    test_data["sentiment"] = df_path["sentiment"]
+    test_data["sentiment"] = df["sentiment"]
 except e:
     print("Make sure you have sentiment column, that is used to generate report")
 
