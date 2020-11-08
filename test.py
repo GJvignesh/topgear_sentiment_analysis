@@ -81,14 +81,14 @@ df = pd.read_csv(df_path, encoding="ISO-8859-1")
 print("df.shape: {}".format(df.shape))
 
 # Preprocess the data
-print("Cleaning the data: removing punt, stopword, https, contradiction")
+print("Cleaning the data: removing punt, stopwords, https, contradiction")
 test_data = df["sentence"].apply(utility.preprocess)
 try:
     test_data["sentiment"] = df["sentiment"]
 except e:
     print("Make sure you have sentiment column, that is used to generate report")
 
-
+test_data.reset_index(inplace=True)
 # This will give reduced sentiment [FYI: Its excepting preprocessed dataframe]
 df_new_reduced, sentiment_map, sentiment_demap = utility.test_data_process(dataset=test_data)
 

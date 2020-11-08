@@ -268,6 +268,7 @@ def test_data_process(dataset):
 
     def drop_target(target_list, df):
         """This is used to drop the particular sentiment"""
+        print("df[df.sentiment.isin(target_list)].index: {}".format(df[df.sentiment.isin(target_list)].index))
         df_new = df.drop(df[df.sentiment.isin(target_list)].index)
         df_new.to_csv("df_new.csv")
         df_new_reduced = pd.read_csv("df_new.csv")
