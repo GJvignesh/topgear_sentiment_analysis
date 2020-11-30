@@ -88,6 +88,8 @@ def data_process(dataset_path):
 
     # Merging the sentiment set 2
     df['sentiment'] = df['sentiment'].map(sentiment_reduce_map)
+    df.dropna(inplace=True)
+    print("-" * 60)
     print("After sentiment mapping Set_2")
     print("Total number of sentiments: {}".format(df["sentiment"].nunique()))
 
@@ -229,6 +231,8 @@ def test_data_process(dataset):
 
     # Merging the sentiment set 2
     df['sentiment'] = df['sentiment'].map(sentiment_reduce_map)
+    df.dropna(inplace=True)
+    print("-" * 60)
     print("After sentiment mapping Set_2")
     print("Total number of sentiments: {}".format(df["sentiment"].nunique()))
 
