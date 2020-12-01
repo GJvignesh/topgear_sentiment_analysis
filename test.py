@@ -79,7 +79,7 @@ def valid(model, testing_loader, loss_fn):
 df_path = config.df_path
 
 df = pd.read_csv(df_path, encoding="ISO-8859-1")
-df = df.sample(frac=0.0001)
+# df = df.sample(frac=0.0001)
 print("df.shape: {}".format(df.shape))
 
 # Preprocess the data
@@ -156,6 +156,5 @@ with open(config.generic_path + "y_test_predicted.txt", "w") as outfile:
 with open(config.generic_path + "y_test_predicted_prob_list.txt", "w") as outfile:
     outfile.write( str(y_test_predicted_prob_list) )
 
-test_confusion_matrix_df.to_excel(config.generic_path + "test_confusion_matrix_df.xlsx")
 classification_report_df = pd.DataFrame(classification_report).transpose()
 classification_report_df.to_csv(config.generic_path + "test_classification_report.csv")
