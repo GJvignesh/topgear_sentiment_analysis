@@ -12,9 +12,9 @@ PRE_TRAINED_MODEL_NAME = 'distilbert-base-cased'
 # checkpoint_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_31_unbalanced/pytorch_distilbert_31_unbalanced.pt"
 
 
-checkpoint_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_31_unbalanced/pytorch_distilbert_31_unbalanced_full.pt"
-generic_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_31_unbalanced/"
-df_path = r"/content/drive/My Drive/AGJCSV/comabined_bert_df.csv"  # (2244552, 2)
+checkpoint_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_31_unbalancedn/pytorch_distilbert_31_unbalanced_fulln.pt"
+generic_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_31_unbalancedn/"
+df_path = r"/content/drive/My Drive/AGJCSV/processed_new.csv"  # (2244552, 2)
 
 
 # generic_path = r"/content/drive/My Drive/AGJCSV/models/bert_31_1epoch_unbalanced/"

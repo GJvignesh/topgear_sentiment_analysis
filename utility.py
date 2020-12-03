@@ -31,70 +31,70 @@ def data_process(dataset_path):
     sentiment_count_map = dict(df["sentiment"].value_counts())
     sentiment_reduce_map = dict(zip(df["sentiment"].values, df["sentiment"].values))
 
-    sentiment_reduce_map["afraid"] = "fear"
-    sentiment_reduce_map["angry"] = "anger"
-    sentiment_reduce_map["angry-disgusted"] = "anger"
-    sentiment_reduce_map["anxiety"] = "anxious"
-    sentiment_reduce_map["depression"] = "depressed"
-    sentiment_reduce_map["disguest"] = "disgust"
-    sentiment_reduce_map["disgusting"] = "disgust"
-    sentiment_reduce_map["exited"] = "excitement"
-    sentiment_reduce_map["fearful"] = "fear"
-    sentiment_reduce_map["fun"] = "funny"
-    sentiment_reduce_map["furious"] = "anger"
-    sentiment_reduce_map["guilt"] = "remorse"
-    sentiment_reduce_map["happiness"] = "happy"
-    sentiment_reduce_map["hateful"] = "hate"
-    sentiment_reduce_map["joy"] = "happy"
-    sentiment_reduce_map["pessimism"] = "negative"
-    sentiment_reduce_map["sadness"] = "sad"
-    sentiment_reduce_map["scared"] = "scary"
-    sentiment_reduce_map["suprise"] = "surprise"
-    sentiment_reduce_map["surprised"] = "surprise"
-    sentiment_reduce_map["very_funny"] = "funny"
-    sentiment_reduce_map["very_negative"] = "negative"
-    sentiment_reduce_map["worried"] = "worry"
-    sentiment_reduce_map["not_relevant"] = "not-relevant"
+    # sentiment_reduce_map["afraid"] = "fear"
+    # sentiment_reduce_map["angry"] = "anger"
+    # sentiment_reduce_map["angry-disgusted"] = "anger"
+    # sentiment_reduce_map["anxiety"] = "anxious"
+    # sentiment_reduce_map["depression"] = "depressed"
+    # sentiment_reduce_map["disguest"] = "disgust"
+    # sentiment_reduce_map["disgusting"] = "disgust"
+    # sentiment_reduce_map["exited"] = "excitement"
+    # sentiment_reduce_map["fearful"] = "fear"
+    # sentiment_reduce_map["fun"] = "funny"
+    # sentiment_reduce_map["furious"] = "anger"
+    # sentiment_reduce_map["guilt"] = "remorse"
+    # sentiment_reduce_map["happiness"] = "happy"
+    # sentiment_reduce_map["hateful"] = "hate"
+    # sentiment_reduce_map["joy"] = "happy"
+    # sentiment_reduce_map["pessimism"] = "negative"
+    # sentiment_reduce_map["sadness"] = "sad"
+    # sentiment_reduce_map["scared"] = "scary"
+    # sentiment_reduce_map["suprise"] = "surprise"
+    # sentiment_reduce_map["surprised"] = "surprise"
+    # sentiment_reduce_map["very_funny"] = "funny"
+    # sentiment_reduce_map["very_negative"] = "negative"
+    # sentiment_reduce_map["worried"] = "worry"
+    # sentiment_reduce_map["not_relevant"] = "not-relevant"
 
-    print("Total sentiment before mapping")
-    print("Total number of sentiments: {}".format(df["sentiment"].nunique()))
-    # Merging the sentiment set 1
-    df['sentiment'] = df['sentiment'].map(sentiment_reduce_map)
-    print("After sentiment mapping Set_1")
-    print("Total number of sentiments: {}".format(df["sentiment"].nunique()))
+    # print("Total sentiment before mapping")
+    # print("Total number of sentiments: {}".format(df["sentiment"].nunique()))
+    # # Merging the sentiment set 1
+    # df['sentiment'] = df['sentiment'].map(sentiment_reduce_map)
+    # print("After sentiment mapping Set_1")
+    # print("Total number of sentiments: {}".format(df["sentiment"].nunique()))
 
-    # New mapping
-    sentiment_reduce_map["awe"] = "carving"
-    sentiment_reduce_map["entertaining"] = "ridicule"
-    sentiment_reduce_map["criticize"] = "ridicule"
-    sentiment_reduce_map["sarcasm"] = "ridicule"
-    sentiment_reduce_map["shame"] = "disgust"
-    sentiment_reduce_map["enthusiasm"] = "surprise"
-    sentiment_reduce_map["relief"] = "happy"
-    sentiment_reduce_map["excitement"] = "happy"
-    sentiment_reduce_map["love"] = "happy"
-    sentiment_reduce_map["horror"] = "anxious"
-    sentiment_reduce_map["pain"] = "anxious"
-    sentiment_reduce_map["arousal"] = "anxious"
-    sentiment_reduce_map["teasing"] = "anxious"
-    sentiment_reduce_map["mad"] = "grief"
-    sentiment_reduce_map["vulgar"] = "grief"
-    sentiment_reduce_map["negative"] = "grief"
-    sentiment_reduce_map["remorse"] = "grief"
-    sentiment_reduce_map["sad"] = "grief"
-    sentiment_reduce_map["not_funny"] = "worry"
-    sentiment_reduce_map["valence"] = "anticipation"
-    sentiment_reduce_map["trust"] = "anticipation"
+    # # New mapping
+    # sentiment_reduce_map["awe"] = "carving"
+    # sentiment_reduce_map["entertaining"] = "ridicule"
+    # sentiment_reduce_map["criticize"] = "ridicule"
+    # sentiment_reduce_map["sarcasm"] = "ridicule"
+    # sentiment_reduce_map["shame"] = "disgust"
+    # sentiment_reduce_map["enthusiasm"] = "surprise"
+    # sentiment_reduce_map["relief"] = "happy"
+    # sentiment_reduce_map["excitement"] = "happy"
+    # sentiment_reduce_map["love"] = "happy"
+    # sentiment_reduce_map["horror"] = "anxious"
+    # sentiment_reduce_map["pain"] = "anxious"
+    # sentiment_reduce_map["arousal"] = "anxious"
+    # sentiment_reduce_map["teasing"] = "anxious"
+    # sentiment_reduce_map["mad"] = "grief"
+    # sentiment_reduce_map["vulgar"] = "grief"
+    # sentiment_reduce_map["negative"] = "grief"
+    # sentiment_reduce_map["remorse"] = "grief"
+    # sentiment_reduce_map["sad"] = "grief"
+    # sentiment_reduce_map["not_funny"] = "worry"
+    # sentiment_reduce_map["valence"] = "anticipation"
+    # sentiment_reduce_map["trust"] = "anticipation"
 
-    # Merging the sentiment set 2
-    df['sentiment'] = df['sentiment'].map(sentiment_reduce_map)
-    df.dropna(inplace=True)
-    print("-" * 60)
-    print("After sentiment mapping Set_2")
-    print("Total number of sentiments: {}".format(df["sentiment"].nunique()))
+    # # Merging the sentiment set 2
+    # df['sentiment'] = df['sentiment'].map(sentiment_reduce_map)
+    # df.dropna(inplace=True)
+    # print("-" * 60)
+    # print("After sentiment mapping Set_2")
+    # print("Total number of sentiments: {}".format(df["sentiment"].nunique()))
 
-    after_sentiment_merge = df["sentiment"].value_counts().plot(kind="bar", figsize=(25, 10)).get_figure()
-    after_sentiment_merge.savefig(config.generic_path + 'after_sentiment_merge.jpeg')
+    # after_sentiment_merge = df["sentiment"].value_counts().plot(kind="bar", figsize=(25, 10)).get_figure()
+    # after_sentiment_merge.savefig(config.generic_path + 'after_sentiment_merge.jpeg')
 
     # Setting to category type for encoding
     df["sentiment"] = df["sentiment"].astype("category")
@@ -152,6 +152,8 @@ def data_process(dataset_path):
     print("-" * 80)
     print("df.shape: {}".format(df_new_reduced.shape))
     print("df.columns: {}".format(df_new_reduced.columns))
+    print("df_new_reduced[unique]: {}".format(df_new_reduced["sentiment"].unique))
+    print("df_new_reduced[nunique]: {}".format(df_new_reduced["sentiment"].nunique()))
 
     return df_new_reduced, sentiment_map, sentiment_demap
 
