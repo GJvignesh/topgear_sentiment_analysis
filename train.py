@@ -178,6 +178,13 @@ training_loader, valid_loader, testing_loader = Preprocess.process_data_for_mode
 model = model.DistillBERTClass()  # instance of the bert own model
 model.to(device)  # passing to GPU
 
+# df_new_reduced sentiment is already encoded
+class_weight = utility.get_weight(df_new_reduced)
+
+# Creating the loss function and optimizer
+loss_function = torch.nn.CrossEntropyLoss(class_weight)  # With weight-vector (to increase the F1-score)
+print("Class Weight: {}".format(class_weight))
+
 # Creating the loss function and optimizer
 loss_function = torch.nn.CrossEntropyLoss()  # without weight vector (to increase the accuracy score)
 

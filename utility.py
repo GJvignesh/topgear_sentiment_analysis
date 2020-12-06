@@ -119,7 +119,7 @@ def data_process(dataset_path):
     print(len_target_list)
 
     # Dropping minimum number of target (as of now dropping 5 targets)
-    target_list = ['not-relevant', 'others', 'nocode', 'none', 'https',
+    target_list = ['guilt', 'others', 'nocode', 'none', 'https',
                    'awkwardness', 'agreement', 'disagreement', 'emotion', 'empty', 'encouragement', 'motivate',
                    'optimism', 'racist/sexist']
 
