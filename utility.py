@@ -223,6 +223,7 @@ def test_data_process(dataset):
     print("-" * 80)
     print("df.shape: {}".format(df_new_reduced.shape))
     print("df.columns: {}".format(df_new_reduced.columns))
+    print("sentiment_map: {}".format(sentiment_map))
 
     return df_new_reduced[["sentence","sentiment"]], sentiment_map, sentiment_demap
 
