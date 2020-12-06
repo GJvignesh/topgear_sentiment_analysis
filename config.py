@@ -12,14 +12,14 @@ PRE_TRAINED_MODEL_NAME = 'distilbert-base-cased'
 # checkpoint_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_31_unbalanced/pytorch_distilbert_31_unbalanced.pt"
 
 # Un-Balanced
-# checkpoint_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_31_unbalancedn/pytorch_distilbert_31_unbalanced_fulln.pt"
-# generic_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_31_unbalancedn/"
-# df_path = r"/content/drive/My Drive/AGJCSV/processed_new.csv"  # (1488909, 2)
+checkpoint_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_31_unbalancedn/pytorch_distilbert_31_unbalanced_fulln.pt"
+generic_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_31_unbalancedn/"
+df_path = r"/content/drive/My Drive/AGJCSV/processed_new.csv"  # (1488909, 2)
 
 # Balanced
-checkpoint_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_31_balancedn/pytorch_distilbert_31_balanced_fulln.pt"
-generic_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_31_balancedn/"
-df_path = r"/content/drive/My Drive/AGJCSV/processed_new.csv"  # (1488909, 2)
+# checkpoint_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_31_balancedn/pytorch_distilbert_31_balanced_fulln.pt"
+# generic_path = r"/content/drive/My Drive/AGJCSV/models/distill_bert_31_balancedn/"
+# df_path = r"/content/drive/My Drive/AGJCSV/processed_new.csv"  # (1488909, 2)
 
 df_valid_path = r"/content/drive/My Drive/AGJCSV/Validation_NEW/Validation_NEW.csv"
 
